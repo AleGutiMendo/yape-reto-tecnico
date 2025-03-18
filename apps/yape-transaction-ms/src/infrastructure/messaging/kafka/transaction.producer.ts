@@ -1,30 +1,42 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { TransactionEntity } from '@transaction/domain/entities/transaction.entity';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class TransactionProducer {
+  private readonly logger = new Logger(TransactionProducer.name);
+
   constructor(
     @Inject('KAFKA_PRODUCER') private readonly kafkaClient: ClientKafka,
   ) {}
 
-  async publishTransactionCreated(transaction: TransactionEntity) {
-    if (!this.kafkaClient || !this.kafkaClient['producer']) {
-      console.error('Kafka Producer no está conectado.');
-      return;
+  async publishTransactionCreated(
+    transaction: TransactionEntity,
+  ): Promise<boolean> {
+    if (!this.kafkaClient) {
+      this.logger.error('Kafka Client no está inicializado.');
+      return false;
     }
 
-    const payload = { ...transaction };
+    const payload = JSON.parse(JSON.stringify(transaction));
 
-    console.log('Enviando mensaje a Kafka:', payload);
+    this.logger.log(`Enviando mensaje a Kafka: ${JSON.stringify(payload)}`);
 
     try {
-      await this.kafkaClient.emit('transaction.created', payload).toPromise();
-      console.log(
+      await firstValueFrom(
+        this.kafkaClient.emit('transaction.created', payload),
+      );
+      this.logger.log(
         `Mensaje enviado a Kafka: transaction.created - ID ${transaction.id}`,
       );
+      return true;
     } catch (err) {
-      console.error(`Error enviando mensaje a Kafka:`, err);
+      this.logger.error(
+        `Error enviando mensaje a Kafka: ${err.message}`,
+        err.stack,
+      );
+      return false;
     }
   }
 }

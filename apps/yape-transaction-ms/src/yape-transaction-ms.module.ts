@@ -1,17 +1,21 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { CqrsModule } from '@nestjs/cqrs';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CreateTransactionHandler } from '@transaction/application/commands/create-transaction.command';
 import { TransactionEntity } from '@transaction/domain/entities/transaction.entity';
 import { TransactionConsumer } from '@transaction/infrastructure/messaging/kafka/transaction.consumer';
 import { TransactionProducer } from '@transaction/infrastructure/messaging/kafka/transaction.producer';
 import { TransactionRepository } from '@transaction/infrastructure/repositories/transaction.repository';
+import { TransactionController } from './interface/controllers/transaction.controller';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    CqrsModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST || 'postgres',
@@ -38,6 +42,12 @@ import { TransactionRepository } from '@transaction/infrastructure/repositories/
           consumer: {
             groupId: 'transaction-consumer',
           },
+          serializer: {
+            serialize: (value) => Buffer.from(JSON.stringify(value)),
+          },
+          deserializer: {
+            deserialize: (value) => JSON.parse(value.toString()),
+          },
         },
       },
       {
@@ -52,7 +62,13 @@ import { TransactionRepository } from '@transaction/infrastructure/repositories/
       },
     ]),
   ],
-  providers: [TransactionRepository, TransactionProducer, TransactionConsumer],
+  providers: [
+    TransactionRepository,
+    TransactionProducer,
+    TransactionConsumer,
+    CreateTransactionHandler,
+  ],
+  controllers: [TransactionController],
   exports: [TransactionRepository, TransactionProducer],
 })
 export class YapeTransactionMsModule {}
