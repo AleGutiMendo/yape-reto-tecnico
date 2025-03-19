@@ -1,34 +1,34 @@
+import { AntiFraudResponseDto } from '@antifraud/interface/dtos/anti-fraud-response.dto';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
-import { TransactionEntity } from '@transaction/domain/entities/transaction.entity';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable()
-export class TransactionProducer {
-  private readonly logger = new Logger(TransactionProducer.name);
+export class AntiFraudProducer {
+  private readonly logger = new Logger(AntiFraudProducer.name);
 
   constructor(
     @Inject('KAFKA_PRODUCER') private readonly kafkaClient: ClientKafka,
   ) {}
 
-  async publishTransactionCreated(
-    transaction: TransactionEntity,
+  async publishAntiFraudValidation(
+    message: AntiFraudResponseDto,
   ): Promise<boolean> {
     if (!this.kafkaClient) {
       this.logger.error('Kafka Client no está inicializado.');
       return false;
     }
 
-    const payload = { ...transaction };
+    const payload = JSON.parse(JSON.stringify(message));
 
     this.logger.log(`Enviando mensaje a Kafka: ${JSON.stringify(payload)}`);
 
     try {
       await firstValueFrom(
-        this.kafkaClient.emit('transaction.created', JSON.stringify(payload)),
+        this.kafkaClient.emit('transaction.status.updated', payload),
       );
       this.logger.log(
-        `Mensaje enviado a Kafka: transaction.created - ID ${transaction.id}`,
+        `Mensaje enviado a Kafka: transaction.status.updated - ID ${message.id}`,
       );
       return true;
     } catch (err) {

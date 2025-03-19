@@ -4,6 +4,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CreateTransactionHandler } from '@transaction/application/commands/create-transaction.command';
+import { UpdateTransactionStatusHandler } from '@transaction/application/commands/update-transaction.command';
 import { TransactionEntity } from '@transaction/domain/entities/transaction.entity';
 import { TransactionConsumer } from '@transaction/infrastructure/messaging/kafka/transaction.consumer';
 import { TransactionProducer } from '@transaction/infrastructure/messaging/kafka/transaction.producer';
@@ -67,6 +68,7 @@ import { TransactionController } from './interface/controllers/transaction.contr
     TransactionProducer,
     TransactionConsumer,
     CreateTransactionHandler,
+    UpdateTransactionStatusHandler,
   ],
   controllers: [TransactionController],
   exports: [TransactionRepository, TransactionProducer],

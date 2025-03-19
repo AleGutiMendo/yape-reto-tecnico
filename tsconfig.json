@@ -28,11 +28,11 @@
       "@apiGateway/infrastructure/*": ["apps/yape-api-gateway/src/transaction/infrastructure/*"],
       "@apiGateway/common/*": ["apps/yape-api-gateway/src/transaction/common/*"],
       "@apiGateway/interface/*": ["apps/yape-api-gateway/src/transaction/interface/*"],
-      "@antifraud/application/*": ["apps/yape-antifraud-ms/src/application/*"],
-      "@antifraud/domain/*": ["apps/yape-antifraud-ms/src/domain/*"],
-      "@antifraud/infrastructure/*": ["apps/yape-antifraud-ms/src/infrastructure/*"],
-      "@antifraud/common/*": ["apps/yape-antifraud-ms/src/common/*"],
-      "@antifraud/interface/*": ["apps/yape-antifraud-ms/src/interface/*"]
+      "@antifraud/application/*": ["apps/yape-anti-fraud-ms/src/application/*"],
+      "@antifraud/domain/*": ["apps/yape-anti-fraud-ms/src/domain/*"],
+      "@antifraud/infrastructure/*": ["apps/yape-anti-fraud-ms/src/infrastructure/*"],
+      "@antifraud/common/*": ["apps/yape-anti-fraud-ms/src/common/*"],
+      "@antifraud/interface/*": ["apps/yape-anti-fraud-ms/src/interface/*"]
     }
   }
 }
