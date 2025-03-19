@@ -1,99 +1,181 @@
+# Yape Technical Challenge
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<p align="center">Un monorepo basado en <a href="http://nodejs.org" target="_blank">Node.js</a> y <a href="http://nestjs.com" target="_blank">NestJS</a> para construir aplicaciones escalables y eficientes.</p>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Descripción
 
-## Description
+Este repositorio contiene múltiples aplicaciones y servicios desarrollados con el framework NestJS. Es parte del desafío técnico de Yape y está diseñado para demostrar buenas prácticas en el desarrollo de microservicios y APIs.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Estructura del proyecto
 
-## Project setup
-
-```bash
-$ pnpm install
+```plaintext
+.env
+.gitignore
+.prettierrc
+.docker-compose.yml
+.eslint.config.mjs
+.kafka-topics.sh
+.nest-cli.json
+.package.json
+.pnpm-lock.yaml
+.README.md
+.tsconfig.build.json
+.tsconfig.json
+apps/
+  yape-anti-fraud-ms/
+    src/
+      main.ts
+      yape-anti-fraud-ms.module.ts
+      application/
+      domain/
+      infrastructure/
+      interface/
+    test/
+  yape-api-gateway/
+    src/
+      main.ts
+      yape-api-gateway.module.ts
+      application/
+      domain/
+      infrastructure/
+      interface/
+    test/
+  yape-transaction-ms/
+    src/
+      main.ts
+      yape-transaction-ms.module.ts
+      application/
+      domain/
+      infrastructure/
+      interface/
+    test/
 ```
 
-## Compile and run the project
+## Aplicaciones
+- **yape-anti-fraud-ms**: Microservicio para la detección de fraudes.
+- **yape-api-gateway**: Gateway API para centralizar las solicitudes.
+- **yape-transaction-ms**: Microservicio para la gestión de transacciones.
 
-```bash
-# development
-$ pnpm run start
+## Instalación
+Asegúrate de tener instalado `pnpm`.
 
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+```sh
+pnpm install
 ```
 
-## Run tests
+## Ejecución del proyecto
 
-```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+### Desarrollo
+```sh
+pnpm start:dev
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ pnpm install -g mau
-$ mau deploy
+### Modo Watch
+```sh
+pnpm start:watch
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Producción
+```sh
+pnpm build && pnpm start:prod
+```
 
-## Resources
+### Pruebas
+#### Unitarias
+```sh
+pnpm test
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+#### End-to-End (E2E)
+```sh
+pnpm test:e2e
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+#### Cobertura
+```sh
+pnpm test:cov
+```
+## Variables de Entorno
 
-## Support
+Configura las siguientes variables en un archivo .env:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```plaintext
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASS=postgres
+DB_NAME=transactions
 
-## Stay in touch
+KAFKA_BROKER=localhost:9092
+KAFKA_CLIENT_ID=transaction-ms
+KAFKA_GROUP_ID=transaction-consumer
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+MAX_AMOUNT=1000
+```
 
-## License
+## Ejemplos de Uso
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### 1. Crear una Transacción
+El proceso inicia desde el API Gateway enviando una solicitud al endpoint:
+
+**Endpoint:**
+```
+POST http://localhost:3000/transactions/create
+```
+
+**Request Body:**
+```json
+{
+  "accountExternalIdDebit": "550e8400-e29b-41d4-a716-446655440000",
+  "accountExternalIdCredit": "550e8400-e29b-41d4-a716-446655440001",
+  "transferTypeId": 1,
+  "value": 1090.50
+}
+```
+
+**Flujo del proceso:**
+1. El API Gateway recibe la solicitud y la envía al microservicio `yape-transaction-ms`.
+2. `yape-transaction-ms` procesa la transacción y publica un evento en Kafka (`transaction.created`).
+3. `yape-anti-fraud-ms` consume el evento, valida si la transacción es fraudulenta y publica otro evento (`transaction.status.updated`).
+4. `yape-transaction-ms` actualiza el estado de la transacción en la base de datos.
+
+### 2. Validación Anti-Fraude
+El microservicio `yape-anti-fraud-ms` escucha eventos de Kafka y evalúa si la transacción supera el monto permitido. Si lo hace, la marca como `REJECTED`, de lo contrario, la aprueba (`APPROVED`).
+
+**Ejemplo de mensaje recibido en `yape-anti-fraud-ms`:**
+```json
+{
+  "id": "a63f9c83-ad03-4e8b-8b2f-82afad281ff1",
+  "value": 1090.50
+}
+```
+
+### 3. Actualización del Estado de la Transacción
+Una vez validada la transacción, `yape-anti-fraud-ms` publica un nuevo evento en Kafka con el resultado de la validación:
+
+**Ejemplo de mensaje publicado:**
+```json
+{
+  "id": "a63f9c83-ad03-4e8b-8b2f-82afad281ff1",
+  "status": "REJECTED"
+}
+```
+
+Este mensaje es consumido por `yape-transaction-ms`, que actualiza el estado de la transacción en la base de datos.
+
+## Despliegue
+Para desplegar las aplicaciones, puedes usar Docker y el archivo `docker-compose.yml` incluido en este repositorio:
+
+```sh
+docker-compose up -d
+```
+
+## Recursos
+- [Documentación de NestJS](https://docs.nestjs.com/)
+- [Canal de Discord de NestJS](https://discord.com/invite/nestjs)
+- [Cursos oficiales de NestJS](https://nestjs.com/courses/)
+
